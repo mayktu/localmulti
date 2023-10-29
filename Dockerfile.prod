@@ -1,0 +1,22 @@
+# Use uma imagem base do Linux
+FROM ubuntu:latest
+
+# Atualize os pacotes e instale as dependências necessárias
+RUN apt-get update && apt-get install -y \
+    gcc \
+    make
+
+# Copie o código-fonte do servidor RTSP para a imagem
+COPY ./ /app
+
+# Defina o diretório de trabalho
+WORKDIR /app
+
+# Compile o código do servidor RTSP
+RUN make
+
+# Expõe a porta 554 para o servidor RTSP
+EXPOSE 554
+
+# Comando para executar o servidor RTSP quando o contêiner for iniciado
+CMD ["./server"]
